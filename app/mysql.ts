@@ -1,3 +1,6 @@
 const config = require('./config')
 
-let knex = require('knex')(config.mysql);
+let mysql:any = require('knex')(config.mysql);
+
+
+module.exports = mysql; 

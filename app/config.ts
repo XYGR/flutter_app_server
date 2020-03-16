@@ -6,7 +6,7 @@ let CONFIG:object = {
             host : '119.23.189.240',
             user : 'root',
             password : 'admin666',
-            database : 'myapp_test'
+            database : 'flutter_app'
           }
     }
 }

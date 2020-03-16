@@ -24,5 +24,5 @@ app.use('/user',require('./router/user'));
 
 
 app.listen(config.port,function(){
-    console.log(`server runing @http://10.10.1.102:${config.port}!`);
+    console.log(`server runing @http://10.10.1.103:${config.port}`);
 })
