@@ -1,0 +1,13 @@
+# Miscellaneous
+*.log
+.DS_Store
+.svn/
+
+# IntelliJ related
+.vscode/
+.idea/
+
+# node && npm
+yarn.lock
+build/*
+node_modules/
