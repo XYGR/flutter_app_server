@@ -1,8 +1,10 @@
 import express = require('express');
 import path = require("path");
 import bodyParser = require("body-parser");
+const config = require('./config');
+const session = require('./sessionStore');
 const app:express.Application=express();
-const config = require('./config')
+
 
 // 解析 application/json
 app.use(bodyParser.json()); 
@@ -10,6 +12,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.static(path.resolve(__dirname,'static')));
+
+// app.use(session);
 
 
 // app.use(function(req,res){
@@ -24,5 +28,5 @@ app.use('/user',require('./router/user'));
 
 
 app.listen(config.port,function(){
-    console.log(`server runing @http://10.10.1.103:${config.port}`);
+    console.log(`server runing @http://10.10.1.2:${config.port}`);
 })

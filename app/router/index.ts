@@ -5,14 +5,13 @@ const router:express.Application = express();
 router.get('/api',async(req,res) =>{
 
 
-    let data:object = {
+    let data:any = {
         code:0,
         message:"success",
         data:[]
     }
-    console.log(req.query)
-    // console.log();
-    console.log(await mysql.select().table('user_tab'));
+    let result:Array<Object> = await mysql.table('user_tab').where({user_name:'admin'}).select();
+    data.data = JSON.parse(JSON.stringify(result))
 
 
     res.send(JSON.stringify(data))

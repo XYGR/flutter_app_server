@@ -4,9 +4,11 @@ let CONFIG:object = {
         client: 'mysql',
         connection: {
             host : '119.23.189.240',
+            post : 3306,
             user : 'root',
             password : 'admin666',
-            database : 'flutter_app'
+            database : 'flutter_app',
+            charset: 'utf8',
           }
     }
 }
