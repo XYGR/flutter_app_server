@@ -1,15 +1,28 @@
 import express = require("express");
 const router:express.Application = express();
-const mysql = require('../mysql');
-import User from '../model/UserModel';
+import User from '../entity/UserEntity';
 import userDao from '../dao/userDao'
 
-router.post('/check',(req,res)=> {
+router.get('/boot',async(req,res)=> {
 
-    let {tocken:string} = req.body;
+    let {sessionID} = req.query;
+    console.log(sessionID);
+    let data = {
+        error:true,
+        message:"faild",
+        data:null,
+    }
 
-
-    res.send(JSON.stringify({}))
+    let result:User = await new userDao(new User()).check(sessionID);
+    if(result.userId){
+        data.error = false;
+        data.message = "success";
+        data.data = result.toString();
+    }else{
+        data.message = "the sessionID is invalid";
+    }
+    
+    res.send(JSON.stringify(data))
 
 })
 
@@ -18,7 +31,7 @@ router.post('/register',async(req,res)=>{
 
     let username:string = req.body.username;
     let password:string = req.body.password;
-    console.log(username,password);
+   
     // let result:Array<number> =  await mysql('user_tab').insert({user_name:username,user_pwd:pwd});
 
     let data = {
@@ -37,30 +50,56 @@ router.post('/register',async(req,res)=>{
 })
 
 // 登录接口
-router.post('/login',async(req,res)=>{
+router.post('/login',async(req:any,res)=>{
 
     let username:string = req.body.username;
     let pwd:string = req.body.password;
-    console.log(req.body)
-    // let result:Array<number> =  await mysql('user_tab').insert({user_name:username,user_pwd:pwd});
-    let user = new User()
+    
+    let user = new User();
     user.userName = username;
     user.userPwd = pwd;
     let result:User = await new userDao(user).login();
-    console.log('50',result);
 
     let data = {
-        code:"-1",
+        error:true,
         message:"faild",
         data:null,
     }
 
     if(result.userId){
-        data.code = "0";
+        data.error = false;
         data.message = "success";
-        data.data = result.toString();
+        data.data = req.sessionID;
+        req.session.userInfo = JSON.stringify(result.toString());
+        console.log("sessionID",req.sessionID)
+    }else{
+        data.error = true;
+        data.message = "用户名或密码错误";
     }
+    
+    res.send(JSON.stringify(data))
 
+})
+
+// 注销接口
+router.get('/logout',async(req:any,res)=>{
+
+    let {sessionID} = req.query;
+    console.log(sessionID);
+    
+    let data = {
+        error:true,
+        message:"faild",
+        data:null,
+    }
+    let result:boolean = await new userDao(new User()).logout(sessionID);
+    if(result){
+        data.error = false;
+        data.message = "success";
+    }else{
+        data.message = "error logging out";
+    }
+    
     res.send(JSON.stringify(data))
 
 })

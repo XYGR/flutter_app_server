@@ -56,15 +56,14 @@ export default class User{
         this._userAvatar = value;
     }
     constructor(user:any = { }){
-        console.log(user)
-        this._userId = user.user_id??'';
-        this._userName = user.user_name??'';
-        this._userPwd = user.user_pwd??'';
-        this._userNick = user.user_nick??'';
-        this._userPhone = user.user_phone??'';
-        this._userEmail = user.user_email??'';
-        this._userBirthday = user.user_birthday??'';
-        this._userAvatar = user.user_avatar??'';
+        this._userId = user.user_id?user.user_id:(user.userId??'');
+        this._userName = user.user_name?user.user_name:(user.userName??'');
+        this._userPwd = user.user_pwd?user.user_pwd:(user.userPwd??'');
+        this._userNick = user.user_nick?user.user_nick:(user.userNick??'');
+        this._userPhone = user.user_phone?user.user_phone:(user.userPhone??'');
+        this._userEmail = user.user_email?user.user_email:(user.userEmail??'');
+        this._userBirthday = user.user_birthday?user.user_birthday:(user.userBirthday??'');
+        this._userAvatar = user.user_avatar?user.user_avatar:(user.userAvatar??'');
     }
     public toString ():any{
         

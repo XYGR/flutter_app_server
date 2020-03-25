@@ -1,6 +1,7 @@
 import express = require('express');
 import path = require("path");
 import bodyParser = require("body-parser");
+const cors = require("cors");
 const config = require('./config');
 const session = require('./sessionStore');
 const app:express.Application=express();
@@ -13,15 +14,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.static(path.resolve(__dirname,'static')));
 
-// app.use(session);
+app.use(session);
+app.use(cors());
 
-
-// app.use(function(req,res){
-//     const proxy:any = req.query.proxy;
-//     if(proxy){
-//         req.cookies = `req.header.cookie__proxy${proxy}`
-//     }
-// })
 
 app.use('/doc',require('./router/index'));
 app.use('/user',require('./router/user'));
